@@ -1,0 +1,20 @@
+<Alloy>
+	<TabGroup>
+		<Tab title="Products">
+			<Window class="container" title="Products">
+				<Button title="Refresh Products" class="refreshButton" onClick="remoteRefresh.products"></Button>
+		        <TableView dataCollection="product" class="displayTable">
+		            <TableViewRow title="{productName}" />
+		        </TableView>
+			</Window>
+		</Tab>
+		<Tab title="Categories">
+			<Window class="container" title="Categories">
+				<Button title="Refresh Categories" class="refreshButton"></Button>
+		        <TableView dataCollection="category" class="displayTable">
+		            <TableViewRow title="{categoryName}" />
+		        </TableView>
+			</Window>
+		</Tab>
+	</TabGroup>
+</Alloy>
