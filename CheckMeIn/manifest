@@ -1,8 +1,8 @@
-#appname: OrderSync
+#appname: CheckMeIn
 #publisher: benjamin
 #url: http://bencoding.com
 #image: appicon.png
-#appid: com.appworkbench.ordersync
+#appid: com.appworkbench.checkmein
 #desc: undefined
 #type: mobile
-#guid: 4b300569-4434-4fed-9aee-c521d62acd1a
+#guid: c39716ea-c18a-4d61-bf3e-db2e8ea7c616

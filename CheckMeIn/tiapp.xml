@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.appworkbench.ordersync</id>
-    <name>OrderSync</name>
+    <id>com.appworkbench.checkmein</id>
+    <name>CheckMeIn</name>
     <version>1.0</version>
     <publisher>benjamin</publisher>
     <url>http://bencoding.com</url>
@@ -11,7 +11,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>4b300569-4434-4fed-9aee-c521d62acd1a</guid>
+    <guid>c39716ea-c18a-4d61-bf3e-db2e8ea7c616</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
