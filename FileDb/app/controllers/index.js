@@ -1,5 +1,5 @@
 
-var libary = require('biblio')("mystorage");
+var libary = require('ti.biblio')("mystorage");
 var async = require('async');
 
 var downloader = function(info,callback){	
