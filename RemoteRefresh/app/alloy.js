@@ -10,6 +10,5 @@
 //
 // Alloy.Globals.someGlobalFunction = function(){};
 if (OS_IOS || OS_ANDROID) {
-	Alloy.Collections.product = Alloy.createCollection('product');
-	Alloy.Collections.category = Alloy.createCollection('category');
+	Alloy.Collections.store = Alloy.createCollection('store');
 }

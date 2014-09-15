@@ -1,16 +1,25 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "categoryCode": "text",
-		    "CategoryName": "text"
+			"storeCode" :"real",
+		    "storeName": "text",
+		    "address": "text",
+		    "phone": "text",
+		    "hours": "text"
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "category"
+			collection_name: "store"
 		}
 	},
 	extendModel: function(Model) {
 		_.extend(Model.prototype, {
+			// extended functions and properties go here
+		});
+		return Model;
+	},
+	extendCollection: function(Collection) {
+		_.extend(Collection.prototype, {
 	        removeAll : function() {
 	            var collection = this;	
 	            var sql = "DELETE FROM " + collection.config.adapter.collection_name;
@@ -20,14 +29,6 @@ exports.definition = {
 	            collection.trigger('sync');
 	        }
 		});
-
-		return Model;
-	},
-	extendCollection: function(Collection) {
-		_.extend(Collection.prototype, {
-			// extended functions and properties go here
-		});
-
 		return Collection;
 	}
 };

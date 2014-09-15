@@ -7,39 +7,26 @@ var mongoClient = new mongo({
 	dbName : "your database name goes here"	
 });
 
-var products = Alloy.Collections.product;
-var categories = Alloy.Collections.category;
+var stores = Alloy.Collections.store;
 
 // fetch existing tables from storage
-products && products.fetch();
-categories && categories.fetch();
+stores && stores.fetch();
 
 var remoteRefresh = {
-	addCategory : function(item){		    
+	addStore : function(item){		    
 	    // Create a new model for the categories collection
-	    var category = Alloy.createModel('category', {
-	        categoryCode : item.categoryCode,
-	        CategoryName : item.CategoryName
+	    var store = Alloy.createModel('store', {
+	        storeCode : item.storeCode,
+	        storeName : item.storeName,
+	        address : item.address,
+	        phone : item.phone,
+	        hours : item.hours
 	    });
 	
 	    // add new model to the global collection
-	    categories.add(category);
-	    category.save();
-	    categories.fetch();		
-	},
-	addProduct : function(item){		    
-	    // Create a new model for the products collection
-	    var product = Alloy.createModel('product', {
-	        productCode : item.productCode,
-	        productName : item.productName,
-	        categoryCode : item.categoryCode,
-	        price : item.price
-	    });
-	
-	    // add new model to the global collection
-	    products.add(product);
-	    product.save();
-	    products.fetch();		
+	    stores.add(store);
+	    store.save();
+	    stores.fetch();		
 	},
 	networkNotAvailable : function(){
 		if(!Ti.Network.online){
@@ -48,32 +35,18 @@ var remoteRefresh = {
 		}		
 		return false;
 	},
-	products : function(){
+	stores : function(){
 		if(remoteRefresh.networkNotAvailable()){
 			return;
 		}
-		products.removeAll(); //Remove all local records
-		//Call to MongoLab to get the full Product Collection
-		mongoClient.getDocuments('product',function(data){
+		stores.removeAll(); //Remove all local records
+		//Call to MongoLab to get the full Store Collection
+		mongoClient.getDocuments('store',function(data){
 			if(!data.sucess){
 				alert("Error: " + JSON.stringify(data.message));
 				return;
 			}
-			_.each(data.docs, remoteRefresh.addProduct);
-		});		
-	},
-	categories : function(){
-		if(remoteRefresh.networkNotAvailable()){
-			return;
-		}
-		categories.removeAll(); //Remove all local records
-		//Call to MongoLab to get the full Product Collection
-		mongoClient.getDocuments('category',function(data){
-			if(!data.sucess){
-				alert("Error: " + JSON.stringify(data.message));
-				return;
-			}
-			_.each(data.docs, remoteRefresh.addCategory);
+			_.each(data.docs, remoteRefresh.addStore);
 		});
 	}
 };
