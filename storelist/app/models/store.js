@@ -2,10 +2,11 @@ exports.definition = {
 	config: {
 		columns: {
 			"storeCode" :"real",
-		    "storeName": "text",
-		    "address": "text",
-		    "phone": "text",
-		    "hours": "text"
+		    	"storeName": "text",
+		    	"address": "text",
+		    	"phone": "text",
+		    	"hours": "text",
+		    	"countryCode" : "text"
 		},
 		adapter: {
 			type: "sql",
