@@ -3,10 +3,10 @@
     <id>com.appworkbench.storelist</id>
     <name>storelist</name>
     <version>1.0</version>
-    <publisher>benjamin</publisher>
+    <publisher>Benjamin Bahrenburg</publisher>
     <url>http://bencoding.com</url>
-    <description/>
-    <copyright>2014 by benjamin</copyright>
+    <description>Titanium Professional Techniques chapter 3 sample</description>
+    <copyright>2014 by Benjamin Bahrenburg</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>

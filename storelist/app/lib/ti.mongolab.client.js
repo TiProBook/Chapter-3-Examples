@@ -46,6 +46,12 @@ var client = function(config){
 	
 	var network = {
 		fetch : function(actionType, url, callback){
+			if(!Ti.Network.online){
+				callback({
+					success:false, message:"No network connection available", statusCode:0	
+				});
+				return;
+			}
 			if(config.debug){
 				Ti.API.debug("network.fetch URL: " + url);
 			}
@@ -61,7 +67,7 @@ var client = function(config){
 				if (xhr.readyState == 4 && !done) {
 					done=true;
 					//Make sure the network didn't freak out
-					if(this.status==200){
+					if(this.status == 200){
 						 callback({sucess:true, docs:JSON.parse(xhr.responseData), statusCode:xhr.status});						 			
 					}else{
 						 callback({sucess:false, message:xhr.status, statusCode:xhr.status});
@@ -72,6 +78,13 @@ var client = function(config){
 			xhr.send();			
 		},
 		execute : function(actionType,url,data,callback){
+			if(!Ti.Network.online){
+				callback({
+					success:false, message:"No network connection available", statusCode:0	
+				});
+				return;
+			}
+			
 			if(config.debug){
 				Ti.API.debug("network.execute URL: " + url);
 			}			
