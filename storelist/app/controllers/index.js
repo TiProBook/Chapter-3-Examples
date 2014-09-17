@@ -1,4 +1,9 @@
 
+var stores = Alloy.Collections.store;
+
+// fetch existing tables from storage
+stores && stores.fetch();
+
 var mongo = require('ti.mongolab.client');
 
 var mongoClient = new mongo({
@@ -6,11 +11,6 @@ var mongoClient = new mongo({
 	apiKey:"your mongo lab apikey goes here",
 	dbName : "your database name goes here"	
 });
-
-var stores = Alloy.Collections.store;
-
-// fetch existing tables from storage
-stores && stores.fetch();
 
 var remoteRefresh = {
 	addStore : function(item){		    
