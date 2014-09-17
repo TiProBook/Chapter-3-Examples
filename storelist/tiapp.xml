@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.appworkbench.remoterefresh</id>
-    <name>RemoteRefresh</name>
+    <id>com.appworkbench.storelist</id>
+    <name>storelist</name>
     <version>1.0</version>
     <publisher>benjamin</publisher>
     <url>http://bencoding.com</url>
-    <description>undefined</description>
+    <description/>
     <copyright>2014 by benjamin</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>fd0552fb-2ede-4d51-ab4f-183c4fc1312c</guid>
+    <guid>3811becd-758e-4a84-90b9-05aa14d8b4c5</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>

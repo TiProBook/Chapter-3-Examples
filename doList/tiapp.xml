@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.appworkbench.azuresync</id>
-    <name>AzureSync</name>
+    <id>com.appworkbench.dolist</id>
+    <name>doList</name>
     <version>1.0</version>
     <publisher>benjamin</publisher>
     <url>http://bencoding.com</url>
-    <description/>
+    <description>undefined</description>
     <copyright>2014 by benjamin</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>0560b9e0-1436-4445-b85c-5d3dfd1df6b4</guid>
+    <guid>2d425f91-fc2c-45ce-8df7-c6e14e30e25b</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -49,7 +49,7 @@
     </mobileweb>
     <modules/>
     <deployment-targets>
-        <target device="android">false</target>
+        <target device="android">true</target>
         <target device="blackberry">false</target>
         <target device="ipad">false</target>
         <target device="iphone">true</target>
