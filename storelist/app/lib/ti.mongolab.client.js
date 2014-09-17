@@ -46,6 +46,7 @@ var client = function(config){
 	
 	var network = {
 		fetch : function(actionType, url, callback){
+			
 			if(!Ti.Network.online){
 				callback({
 					success:false, message:"No network connection available", statusCode:0	
@@ -74,10 +75,12 @@ var client = function(config){
 					}											
 				}	
 			};
+			
 			xhr.open(actionType, url);
 			xhr.send();			
 		},
 		execute : function(actionType,url,data,callback){
+			
 			if(!Ti.Network.online){
 				callback({
 					success:false, message:"No network connection available", statusCode:0	
@@ -88,6 +91,7 @@ var client = function(config){
 			if(config.debug){
 				Ti.API.debug("network.execute URL: " + url);
 			}			
+			
 			var done = false;
 			var xhr = Ti.Network.createHTTPClient();
 			xhr.setRequestHeader("Accept-Type", "application/json; charset=utf-8");
@@ -107,6 +111,7 @@ var client = function(config){
 					}											
 				}	
 			};
+			
 			xhr.open(actionType, url);
 			
 			if(data !=null){

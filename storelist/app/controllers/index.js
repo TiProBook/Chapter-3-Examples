@@ -7,7 +7,8 @@ stores && stores.fetch();
 var mongo = require('ti.mongolab.client');
 
 var mongoClient = new mongo({
-	debug:true,
+	debug : true,
+	timeout : 15000,
 	apiKey:"your mongo lab apikey goes here",
 	dbName : "your database name goes here"	
 });
