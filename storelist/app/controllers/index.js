@@ -20,7 +20,8 @@ var remoteRefresh = {
 	        storeName : item.storeName,
 	        address : item.address,
 	        phone : item.phone,
-	        hours : item.hours
+	        hours : item.hours,
+	        countryCode: item.countryCode
 	    });
 	
 	    // add new model to the global collection
