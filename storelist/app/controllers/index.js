@@ -31,8 +31,8 @@ var storeManager = {
 	    store.save();
 	    stores.fetch();		
 	},
-	scheduledRefresh : function(){
-		var refreshedOn = new Date(parseFloat(Ti.App.Properties.getDouble('LAST_REFESHED',0)));
+	scheduledRefresh : function(){			
+		var refreshedOn = new Date(parseFloat(Ti.App.Properties.getDouble('LAST_REFESHED',new Date().getTime())));
 		var moreThanAWeek = ((new Date() - refreshedOn)/(1000*60*60*24) > 7);
 		
 		if(Ti.Network.online && moreThanAWeek){
@@ -42,10 +42,12 @@ var storeManager = {
 		
 	},
 	refreshAll : function(){
+		
 		if(!Ti.Network.online){
 			alert('A network connection is needed to refresh');
 			return true;
 		}	
+
 		//Call to MongoLab to get the full Store Collection
 		mongoClient.getDocuments('store',function(data){
 			if(!data.sucess){
@@ -59,6 +61,6 @@ var storeManager = {
 	}
 };
 
-//$.index.addEventListener('focus',storeManager.scheduledRefresh);
+$.index.addEventListener('focus',storeManager.scheduledRefresh);
 
 $.index.open();
