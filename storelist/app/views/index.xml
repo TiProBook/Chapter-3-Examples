@@ -1,6 +1,6 @@
 <Alloy>
 	<Window class="container" title="Store List">
-		<Button title="Refresh Stores" class="refreshButton" onClick="remoteRefresh.stores"></Button>
+		<Button title="Refresh Stores" class="refreshButton" onClick="storeManager.refreshAll"></Button>
         <TableView dataCollection="store" class="displayTable">
             <TableViewRow title="{storeName}" />
         </TableView>

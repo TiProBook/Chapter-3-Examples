@@ -13,7 +13,7 @@ var mongoClient = new mongo({
 	dbName : "your database name goes here"	
 });
 
-var remoteRefresh = {
+var storeManager = {
 	addStore : function(item){		    
 	    // Create a new model for the categories collection
 	    var store = Alloy.createModel('store', {
@@ -38,7 +38,7 @@ var remoteRefresh = {
 		}		
 		return false;
 	},
-	stores : function(){
+	refreshAll : function(){
 		if(remoteRefresh.networkNotAvailable()){
 			return;
 		}
