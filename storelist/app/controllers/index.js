@@ -59,6 +59,6 @@ var storeManager = {
 	}
 };
 
-$.index.addEventListener('focus',storeManager.scheduledRefresh);
+//$.index.addEventListener('focus',storeManager.scheduledRefresh);
 
 $.index.open();

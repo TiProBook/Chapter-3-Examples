@@ -11,6 +11,7 @@ exports.definition = {
 		},
 		adapter: {
 			type: "sql",
+			idAttribute: "storeID",
 			collection_name: "store"
 		}
 	},
