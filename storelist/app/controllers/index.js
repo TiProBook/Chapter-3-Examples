@@ -17,9 +17,10 @@ var remoteRefresh = {
 	addStore : function(item){		    
 	    // Create a new model for the categories collection
 	    var store = Alloy.createModel('store', {
-	        storeCode : item.storeCode,
+	        storeID : item.storeID,
 	        storeName : item.storeName,
 	        address : item.address,
+	        city : item.city,
 	        phone : item.phone,
 	        hours : item.hours,
 	        countryCode: item.countryCode
