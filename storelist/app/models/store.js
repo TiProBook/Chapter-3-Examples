@@ -1,7 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
-				"storeID" :"real",
+			"storeID" :"real",
 		    	"storeName": "text",
 		    	"address": "text",
 		    	"city" : "text",
