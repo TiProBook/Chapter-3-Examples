@@ -7,10 +7,18 @@
 	color: "#000"
 } 
 
-".refreshButton":{
+".leftRefreshButton":{
 	top:5,
 	height:45,
-	width:Ti.UI.FILL
+	left:0,
+	width:150
+}
+
+".rightRefreshButton":{
+	top:5,
+	height:45,
+	right:0,
+	width:150
 }
 
 ".displayTable": {

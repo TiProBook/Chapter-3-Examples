@@ -9,21 +9,21 @@ var mongo = require('ti.mongolab.client');
 var mongoClient = new mongo({
 	debug : true,
 	timeout : 15000,
-	apiKey:"your mongo lab apikey goes here",
-	dbName : "your database name goes here"	
+	apiKey:"T5ZN70aNOdcX9LdlujRqlNq0Q42DjYoB",//"your mongo lab apikey goes here",
+	dbName :'store-list' //"your database name goes here"	
 });
 
 var storeManager = {
-	addStore : function(item){		    
+	addStore : function(record){		    
 	    // Create a new model for the categories collection
 	    var store = Alloy.createModel('store', {
-	        storeID : item.storeID,
-	        storeName : item.storeName,
-	        address : item.address,
-	        city : item.city,
-	        phone : item.phone,
-	        hours : item.hours,
-	        countryCode: item.countryCode
+	        storeID : record.storeID,
+	        storeName : record.storeName,
+	        address : record.address,
+	        city : record.city,
+	        phone : record.phone,
+	        hours : record.hours,
+	        countryCode: record.countryCode
 	    });
 	
 	    // add new model to the global collection
@@ -40,6 +40,27 @@ var storeManager = {
 			Ti.App.Properties.setDouble('LAST_REFESHED', new Date().getTime());
 		}
 		
+	},
+	updateUSStores : function(){
+		var criteria = {
+			q : {"countryCode":'US'},
+			l :100
+		};
+
+		if(!Ti.Network.online){
+			alert('A network connection is needed to refresh');
+			return true;
+		}	
+		
+		mongoClient.queryDocuments('store',criteria,function(data){
+			if(!data.sucess){
+				alert("Error: " + JSON.stringify(data.message));
+				return;
+			}
+			stores.removeAll(); //Remove all local records
+			//Loop through each of the documents returned and save locally
+			_.each(data.docs, storeManager.addStore);
+		});		
 	},
 	refreshAll : function(){
 		
