@@ -1,0 +1,38 @@
+"#tableData":{
+	backgroundColor:"#E8EAEB",
+}
+"#topView":{
+	top:'0%',
+	width:'100%',
+	height:'13%',
+	left:'0%',
+	backgroundColor:'#00BCF2'
+}
+"#windowsImage":{
+	top:'25%',
+	width:'250',
+	height:'40',
+	left:'35',
+	right:'35'
+}
+"#addButton":{
+	top:'40%',
+	width:'20',
+	height:'20',
+	right:'5',
+	image:'/images/add.png'
+}
+"#backButton":{
+	top:'40%',
+	width:'13',
+	height:'24',
+	left:'5',
+	image:'/images/back.png'
+}
+"#tableView":{
+	top:'13%',
+	width:'100%',
+	height:'87%',
+	left:'0%',
+	backgroundColor:'white'
+}

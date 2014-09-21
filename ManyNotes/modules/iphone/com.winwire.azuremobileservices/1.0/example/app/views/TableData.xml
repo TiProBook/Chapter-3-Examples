@@ -1,0 +1,15 @@
+<Alloy>
+    <Window class="container" id="tableData">
+        <View id="topView">
+        	<ImageView id="windowsImage" image="/images/logo-complete.png"/>
+        	<ImageView id="addButton" onClick="addtextToserver">
+        	</ImageView>
+        	<ImageView id="backButton" onClick="backButtonClicked">
+        	</ImageView>
+        </View>
+        <View id="tableView">
+        	<TableView id="table" editable="true">
+        </TableView>
+        </View>
+    </Window>
+</Alloy>
