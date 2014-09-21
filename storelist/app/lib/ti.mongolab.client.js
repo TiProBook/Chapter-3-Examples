@@ -7,24 +7,16 @@ var actionTypes = {
 };
 
 var helpers = {
-	// criteriaBuilder : function(query){
-		// var qry = '';
-		// if(query.hasOwnProperty("q")){
-			// qry = "q=" + JSON.stringify(query.q);
-		// }
-		// if(query.hasOwnProperty("s")){
-			// qry = "s=" + JSON.stringify(query.s);
-		// }		
-		// if(query.hasOwnProperty("l")){
-			// qry = "l=" + query.l;
-		// }		
-		// return qry;
-	// }
 	serialize : function(obj, prefix) {
 	  var str = [];
 	  for(var p in obj) {
 	    var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-	    str.push(typeof v == "object" ? k + "=" + JSON.stringify(v): k + "=" + v);
+	    if((k=='c')||(k=='fo')){
+	    	str.push(typeof v == true ? k + "=true": k + "=false");	
+	    }else{
+	    	str.push(typeof v == "object" ? k + "=" + JSON.stringify(v): k + "=" + v);	
+	    }
+	    
 	  }
 	  return str.join("&");
 	}	
