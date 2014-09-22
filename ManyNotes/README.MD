@@ -1,12 +1,10 @@
-Welcome to your Appcelerator Titanium Mobile Project
+<h1>ManyNotes Sample App</h1>
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+The ManyNotes sample app is part of Titanium Professional Techniques by Manning.  This application is used to demonstrate techniques discussed as part of Chapter 3.
 
-
+The code contained is Copyright (c) Benjamin Bahrenburg (bencoding.com)
 
 ----------------------------------
-Stuff our legal folk make us say:
 
 Appcelerator, Appcelerator Titanium and associated marks and logos are 
 trademarks of Appcelerator, Inc. 

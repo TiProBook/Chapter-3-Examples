@@ -27,7 +27,7 @@ var viewController = {
 				});
 			}
 		});
-	},
+	}, 
 	deleteRecord : function(e){
 		notes.get(e.rowData.noteID).destroy();
 		//Add note ID to our removal collection
