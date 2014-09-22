@@ -2,9 +2,9 @@ exports.definition = {
 	config: {
 		columns: {
 		    "noteID": "text primary key",
-		    "text": "text",
-		    "published": "int",
-		    "modifyID": "float"
+		    "noteText": "text",
+		    "published": "integer",
+		    "modifyID": "real"
 		},
 		adapter: {
 			"type": "sql",
@@ -14,10 +14,11 @@ exports.definition = {
 	},
 	extendModel: function(Model) {
 		_.extend(Model.prototype, {
-			addNote : function(){
+			createNote : function(text){
      			 this.set({
-                        noteID : TTi.Platform.createUUID(),
+                        noteID : Ti.Platform.createUUID(),
                         published : 0,
+                        noteText : text,
                         modifyID : new Date().getTime()
                  });
                  this.save();				
@@ -46,9 +47,7 @@ exports.definition = {
 	},
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
-
 		});
-
 		return Collection;
 	}
 };

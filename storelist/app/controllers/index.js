@@ -9,7 +9,7 @@ var mongo = require('ti.mongolab.client');
 var mongoClient = new mongo({
 	debug : true,
 	timeout : 15000,
-	apiKey:"T5ZN70aNOdcX9LdlujRqlNq0Q42DjYoB",//"your mongo lab apikey goes here",
+	apiKey: "your mongo lab apikey goes here",
 	dbName :'store-list' //"your database name goes here"	
 });
 
