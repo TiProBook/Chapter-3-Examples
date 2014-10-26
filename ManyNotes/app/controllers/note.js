@@ -41,7 +41,7 @@ var viewController = {
 	},
 	remove : function(){
 		//Get the note we need to remove
-		notes.get(args.noteID).destroy();
+		notes.get(args.id).destroy();
 	    //Add an event - remove
 	    eventStore.addEvent(args.id,'remove');			
 	},

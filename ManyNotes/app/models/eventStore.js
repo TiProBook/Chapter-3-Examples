@@ -1,3 +1,4 @@
+
 exports.definition = {
 	config: {
 		columns: {
@@ -75,7 +76,7 @@ exports.definition = {
 	        },		        
 	        noteHasEventType : function(noteID,eventType) {
 	            var collection = this;	
-	            var sql = "SELECT eventID FROM " + collection.config.adapter.collection_name + " WHERE noteID=? and eventType=?" ;
+	            var sql = "SELECT id FROM " + collection.config.adapter.collection_name + " WHERE noteID=? and eventType=?" ;
 	            var db = Ti.Database.open(collection.config.adapter.db_name);
 	            var dbRecords = db.execute(sql,noteID,eventType);
 	            var recordCount = dbRecords.getRowCount();

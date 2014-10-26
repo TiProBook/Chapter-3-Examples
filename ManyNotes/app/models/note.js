@@ -7,7 +7,7 @@ exports.definition = {
 		},
 		adapter: {
 			"type": "sql",
-			"idAttribute": "noteID",
+			"idAttribute": "id",
 			"collection_name": "note"
 		}
 	},
@@ -15,7 +15,7 @@ exports.definition = {
 		_.extend(Model.prototype, {
 			createNote : function(text){
      			 this.set({
-                        noteID : Ti.Platform.createUUID(),
+                        id : Ti.Platform.createUUID(),
                         noteText : text,
                         modifyID : new Date().getTime()
                  });
