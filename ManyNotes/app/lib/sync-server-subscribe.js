@@ -2,8 +2,13 @@ var agent = {
 	verifyStatus:function(evtList){
 		var iLength= evtList.length;
 		for (var i=0;i<iLength;i++){
-			if(Alloy.Collections.note.noteExists(evtList[i].noteID)){
+			evtList[i].noteRefCount = _.where(listOfPlays, {noteID: evtList[i].noteID}).length;
+			if(evtList[i].noteRefCount > 1){
 				evtList[i].eventType = 'update';
+			}else{
+				if(Alloy.Collections.note.noteExists(evtList[i].noteID)){
+					evtList[i].eventType = 'update';
+				}				
 			}			
 		}
 		return evtList;	
@@ -55,11 +60,10 @@ var agent = {
 		    });	
 	    	promises.push(deferred.promise); 
 		});
-				
-		
 	},
 	remove : function(evtList){
-		_.each(evtList, function(event) {
+		var removeList = _(evtList).filter(function (x) { return x.eventType == 'remove';});
+		_.each(removeList, function(event) {
 			Alloy.Collections.note.get(event.noteID).destroy();
 		});
 	}
