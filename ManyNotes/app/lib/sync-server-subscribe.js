@@ -1,17 +1,26 @@
 var Q = require("q");
+var notes =  Alloy.Collections.note;
 
 var agent = {
+	formatResults :function(input){
+		try{
+			var data = JSON.parse(input);
+			return (( Object.prototype.toString.call( data ) === '[object Array]' ) ? data[0] : data);
+		}catch(err){
+			return null;
+		}
+	},
 	verifyStatus:function(evtList){
 		var iLength= evtList.length;
 		for (var i=0;i<iLength;i++){
-			evtList[i].noteRefCount = _.where(evtList, {noteID: evtList[i].noteID}).length;
+			evtList[i].noteRefCount = _.where(evtList, {noteid: evtList[i].noteid}).length;
 			if(evtList[i].noteRefCount > 1){
-				evtList[i].eventType = 'update';
+				evtList[i].eventtype = 'update';
 			}else{
-				if(Alloy.Collections.note.noteExists(evtList[i].noteID)){
-					evtList[i].eventType = 'update';
-				}				
-			}			
+				if(Alloy.Collections.note.noteExists(evtList[i].noteid)){
+					evtList[i].eventtype = 'update';
+				}					
+			}				
 		}
 		return evtList;	
 	},
@@ -20,8 +29,7 @@ var agent = {
 		var defer = Q.defer();
 		
 		var query = "?$filter=modifyid%20gt%20" + modifyID;
-	    Alloy.Globals.azure.QueryTable('noteEvents', query, function(jsonResponse) {
-	       
+	    Alloy.Globals.azure.QueryTable('noteEvents', query, function(jsonResponse) {	       
 	       var data = JSON.parse(jsonResponse);
 	       var serverEvts = agent.verifyStatus(data);
 	       console.debug('obtained ' + serverEvts.length + ' server events');
@@ -39,23 +47,29 @@ var agent = {
 	},
 	add : function(evtList,evtStore){
 		var promises = [];
-		var addList = _(evtList).filter(function (x) { return x.eventType == 'add';});
-		
+		var addList = _(evtList).filter(function (x) { return x.eventtype == 'add';});		
 		console.debug('downloading ' + addList.length + ' notes');
 		
-		_.each(addList, function(event) {
+		_.each(addList, function(evt) {
 			var deferred = Q.defer();
-			var query = "?$filter=id%20eq%" + event.noteID;
+			console.debug('preparing to dowload document id ' + evt.noteid);
+			var query = "?$filter=id%20eq%20'" + evt.noteid + "'";
 		    Alloy.Globals.azure.QueryTable('notes', query, function(jsonResponse) {
-		       var data = JSON.parse(jsonResponse);
+		      var data = agent.formatResults(jsonResponse);
+			  if(data == null){
+		       		console.error('invalid document description skipping id ' + evt.noteid);
+		       		return defer.resolve();
+		      }
+		       
+		      console.debug('creating local note with id ' + evt.noteid);
 				// Create a new model for the note collection
 			    var note = Alloy.createModel('note',{
-			    	id: data.id,
-			    	noteText: data.noteText,
-			    	modifyID : data.modifyID			    	
+			    	id: data.id,		
+			    	notetext: data.notetext,
+			    	modifyid : data.modifyid			    	
 			    });
-			    // add new model to the global collection
-			    Alloy.Collections.note.add(note);		       
+			    // add new note model to our collection and save
+			    notes.add(note);		       
        			note.save();
        			console.debug('note ' + data.id + ' created');
        			deferred.resolve();			       
@@ -72,9 +86,9 @@ var agent = {
 		return Q.all(promises);	
 	},
 	remove : function(evtList){
-		var removeList = _(evtList).filter(function (x) { return x.eventType == 'remove';});
+		var removeList = _(evtList).filter(function (x) { return x.eventtype == 'remove';});
 		_.each(removeList, function(event) {
-			Alloy.Collections.note.get(event.noteID).destroy();
+			Alloy.Collections.note.get(event.noteid).destroy();
 		});
 	}
 };

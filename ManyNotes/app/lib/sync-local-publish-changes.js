@@ -22,16 +22,16 @@ var agent = {
 			console.debug('start processing ' + events.length + ' add events');
 			_.each(events, function(event) {
 
-				var request = agent.createNoteRequest(event.toJSON().noteID);
+				var request = agent.createNoteRequest(event.toJSON().noteid);
 				if(request == null){
 					console.debug('unable to load note, skipping sync');
 				}else{
 					var deferred = Q.defer();
-					console.debug('publishing noteID:' + event.toJSON().noteID);
+					console.debug('publishing noteid:' + event.toJSON().noteid);
 				    Alloy.Globals.azure.InsertTable('notes', request, function(data) {
 						deferred.resolve(data);				
 		            }, function(err) {
-		            	console.error('Error publishing noteID:' + event.toJSON().noteID + ' ' + err);
+		            	console.error('Error publishing noteID:' + event.toJSON().noteid + ' ' + err);
 		      			var error = JSON.parse(JSON.stringify(err));
 		   				deferred.reject({
 							success:  false,
@@ -59,11 +59,11 @@ var agent = {
 			
 			_.each(events, function(event) {
 				var deferred = Q.defer();
-				console.debug('removing azure stored noteID:' + event.toJSON().noteID);
-			    Alloy.Globals.azure.DeleteTable('notes', event.toJSON().noteID, function(data) {
+				console.debug('removing azure stored noteID:' + event.toJSON().noteid);
+			    Alloy.Globals.azure.DeleteTable('notes', event.toJSON().noteid, function(data) {
 					deferred.resolve(data);				
 	            }, function(err) {
-	            	console.error('Error removing azure stored noteID:' + event.toJSON().noteID + ' ' + err);
+	            	console.error('Error removing azure stored noteID:' + event.toJSON().noteid + ' ' + err);
 	      			var error = JSON.parse(JSON.stringify(err));
 	   				deferred.reject({
 						success:  false,

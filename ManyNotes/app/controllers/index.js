@@ -16,30 +16,42 @@ var viewController = {
 		}
 	},
 	sync : function(){
-		if(!Ti.Network.online){
-			alert("A network connection is needed to sync your notes. Please check your network connection and try again.");
-			return;
-		}	
-		//Authorization needed to syc
-		auth(function(e){
-			if(!e){
-				alert('need to login to sync');
-			}
-			
-			if(e){
+		
+		function connectThenSync(){
+			if(!Ti.Network.online){
+				alert("A network connection is needed to sync your notes. Please check your network connection and try again.");
+				return;
+			}	
+			auth.connect(function(e){
 				sync(function(r){
  					if(r.success){
- 						alert('awesome');
+ 						alert('notes synchronized successfully');
  					}else{
- 						alert('problem');
+ 						alert('Oops error synchronizing due to ' + r.message);
  					}
-				});			
-			}
-		});
+				});					
+			});				
+		}
+		
+		if(auth.hasConnectedBefore()){
+			connectThenSync();
+			return;
+		}
+	  	var dialog = Ti.UI.createAlertDialog({
+	    	buttonNames: ['No', 'Yes'],
+	    	title: 'Information',
+	    	message: 'To syncrhonize your notes, we first required you to login. Would you likst to login now?'	   
+	  	});
+	  	dialog.addEventListener('click', function(e){
+	    	if (e.index === 1){
+	      		connectThenSync();
+	    	}
+	  	});
+	  	dialog.show();
 	}, 
 	deleteRecord : function(e){
 		//Remove note
-		notes.get(e.rowData.noteID).destroy();
+		notes.get(e.rowData.noteid).destroy();
 	    //Add an event - remove
 	    eventStore.addEvent(e.rowData.noteID,'remove');		
 	},

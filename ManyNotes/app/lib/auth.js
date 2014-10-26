@@ -20,8 +20,12 @@ var providerHelpers = {
 		return Ti.App.Properties.getString('OAUTH_PROVIDER');
 	}	
 };
+
+exports.hasConnectedBefore = function(){
+	return (providerHelpers.find() !== null);
+};
     
-module.exports = function(callback){
+exports.connect = function(callback){
 
 	function performAutho(provider){
         Alloy.Globals.azure.authorizeClient(provider, function(data) {

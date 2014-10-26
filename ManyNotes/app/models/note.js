@@ -2,8 +2,8 @@ exports.definition = {
 	config: {
 		columns: {
 		    "id": "text primary key",
-		    "noteText": "text",
-		    "modifyID": "real"
+		    "notetext": "text",
+		    "modifyid": "real"
 		},
 		adapter: {
 			"type": "sql",
@@ -16,18 +16,24 @@ exports.definition = {
 			createNote : function(text){
      			 this.set({
                         id : Ti.Platform.createUUID(),
-                        noteText : text,
-                        modifyID : new Date().getTime()
+                        notetext : text,
+                        modifyid : new Date().getTime()
                  });
                  this.save();				
 			},
 			updateNote : function(text){
 		     	this.set({
-		     		 noteText : text,
-                     modifyID : new Date().getTime()
+		     		 notetext : text,
+                     modifyid : new Date().getTime()
                 });
                 this.save();				
-			},
+			}
+		});
+
+		return Model;
+	},
+	extendCollection: function(Collection) {
+		_.extend(Collection.prototype, {
 			noteExists : function(id){
 		        var collection = this;	
 	            var sql = "SELECT id FROM " + collection.config.adapter.collection_name + " WHERE id=?" ;
@@ -37,16 +43,7 @@ exports.definition = {
 	            dbRecords.close();
 	            db.close();
 	     		return (recordCount>0);			
-			},
-			lastModified : function(){
-				return new Date(parseFloat(this.get("modifyID")));
-			}
-		});
-
-		return Model;
-	},
-	extendCollection: function(Collection) {
-		_.extend(Collection.prototype, {
+			}			
 		});
 		return Collection;
 	}

@@ -3,13 +3,13 @@ exports.definition = {
 	config: {
 		columns: {
 		    "id": "text primary key",
-		    "noteID": "text",
-		    "eventType": "text",
-		    "modifyID": "real"
+		    "noteid": "text",
+		    "eventtype": "text",
+		    "modifyid": "real"
 		},
 		adapter: {
 			"type": "sql",
-			"idAttribute": "eventID",
+			"idAttribute": "eventid",
 			"collection_name": "eventStore"
 		}
 	},
@@ -22,7 +22,7 @@ exports.definition = {
 		_.extend(Collection.prototype, {
             initialize: function () {
                 //*** Default sort field.  Replace with your own default.
-                this.sortField = "modifyID";
+                this.sortField = "modifyid";
                 //*** Default sort direction
                 this.sortDirection = "DESC";
             },
@@ -68,7 +68,7 @@ exports.definition = {
 	        },
 	        removeEventsForNote : function(noteID) {
 	            var collection = this;	
-	            var sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE noteID=?" ;
+	            var sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE noteid=?" ;
 	            var db = Ti.Database.open(collection.config.adapter.db_name);
 	            db.execute(sql,noteID);
 	            db.close();
@@ -76,7 +76,7 @@ exports.definition = {
 	        },		        
 	        noteHasEventType : function(noteID,eventType) {
 	            var collection = this;	
-	            var sql = "SELECT id FROM " + collection.config.adapter.collection_name + " WHERE noteID=? and eventType=?" ;
+	            var sql = "SELECT id FROM " + collection.config.adapter.collection_name + " WHERE noteid=? and eventtype=?" ;
 	            var db = Ti.Database.open(collection.config.adapter.db_name);
 	            var dbRecords = db.execute(sql,noteID,eventType);
 	            var recordCount = dbRecords.getRowCount();

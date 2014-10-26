@@ -10,12 +10,12 @@ var agent = {
 		}
 	},	
 	createMaxEventList : function(list,noteID){
-		var eventsForID = _(list).filter(function (x) { return x.noteID == noteID;});			
-		return  _.max(eventsForID, function(evt){ return evt.modifyID; });		
+		var eventsForID = _(list).filter(function (x) { return x.noteid == noteID;});			
+		return  _.max(eventsForID, function(evt){ return evt.modifyid; });		
 	},
 	uniqueUpdateList :function(list){
-		var updateList = _(list).filter(function (x) { return x.eventType == 'update';});
-		return _.uniq(updateList, false, function(p){ return p.noteID; });			
+		var updateList = _(list).filter(function (x) { return x.eventtype == 'update';});
+		return _.uniq(updateList, false, function(p){ return p.noteid; });			
 	},	
 	serverToLocalCompare : function(localEvents,serverEvents){
 		try{
@@ -26,16 +26,16 @@ var agent = {
 			
 			_.each(serverSearch, function(srvEvt) {
 					
-				var localEvent =  agent.createMaxEventList(localEvents,srvEvt.noteID);
+				var localEvent =  agent.createMaxEventList(localEvents,srvEvt.noteid);
 							
-				if(localEvent[0].modifyID < srvEvt.modifyID){
+				if(localEvent[0].modifyid < srvEvt.modifyid){
 					var deferred = Q.defer();	
-					var query = "?$filter=id%20eq%" + srvEvt.noteID;
+					var query = "?$filter=id%20eq%" + srvEvt.noteid;
 				    Alloy.Globals.azure.QueryTable('notes', query, function(jsonResponse) {
 				       	var data = JSON.parse(jsonResponse);
-				       	var note = notes.get(srvEvt.noteID);
-						note.noteText= data.noteText;
-						note.modifyID = data.modifyID;	       
+				       	var note = notes.get(srvEvt.noteid);
+						note.notetext= data.notetext;
+						note.modifyid = data.modifyid;	       
 			   			note.save();
 			   			deferred.resolve();			       
 				    }, function(err) {
@@ -62,13 +62,13 @@ var agent = {
 				
 			_.each(searchList, function(locEvt) {
 				
-				var serverEvent =  agent.createMaxEventList(serverEvents,locEvt.noteID);
+				var serverEvent =  agent.createMaxEventList(serverEvents,locEvt.noteid);
 				
-				if(serverEvent[0].modifyID < locEvt.modifyID){
-					var request = agent.createNoteRequest(locEvt.noteID);
+				if(serverEvent[0].modifyid < locEvt.modifyid){
+					var request = agent.createNoteRequest(locEvt.noteid);
 					if(request !==null){
 						var deferred = Q.defer();
-				         Alloy.Globals.azure.UpdateTable('notes', locEvt.noteID, request, function(response) {
+				         Alloy.Globals.azure.UpdateTable('notes', locEvt.noteid, request, function(response) {
 							deferred.resolve(response);	
 					    }, function(err) {
 					        var error = JSON.parse(JSON.stringify(err));

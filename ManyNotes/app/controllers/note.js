@@ -3,7 +3,7 @@ var args = arguments[0] || {};
 var eventStore = require('localEventStore');
 
 //Check if we have the noteText and noteID value, if so we are in edit mode
-var isEdit = args.hasOwnProperty("noteText") && args.hasOwnProperty("id");
+var isEdit = args.hasOwnProperty("notetext") && args.hasOwnProperty("id");
 
 //Set our time depending on if we are editing or not
 $.noteWindow.title = (isEdit ? "Edit Note" : "Add Note");
@@ -11,8 +11,8 @@ $.noteWindow.title = (isEdit ? "Edit Note" : "Add Note");
 //If we are editing add the values
 //Otherwise just use place-holder text
 if(isEdit){
-	$.txtNote.value = args.noteText;
-	$.labelUpdated.text = String.format("updated: %s %s",String.formatDate(new Date(parseFloat(args.modifyID))),String.formatTime(new Date(parseFloat(args.modifyID))));	
+	$.txtNote.value = args.notetext;
+	$.labelUpdated.text = String.format("updated: %s %s",String.formatDate(new Date(parseFloat(args.modifyid))),String.formatTime(new Date(parseFloat(args.modifyid))));	
 }else{
 	$.labelUpdated.text = "Updated: Now";
 }
