@@ -7,7 +7,7 @@ Alloy.Collections.syncTransactions = Alloy.createCollection('syncTranaction');
 //Add Azure Application Information
 //This is where you would put your azure mobile services name
 Alloy.CFG.azureAppInfo = {
-	name :'<---APP NAME---->';  //Replace with your Application name
+	name :'<---APP NAME---->'  //Replace with your Application name
 };
 
 //Require our Azure Mobile Services Native Module
