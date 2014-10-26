@@ -1,12 +1,13 @@
 
 // Create the Note Collection, this will be used to store all of our notes
 Alloy.Collections.note = Alloy.createCollection('note');
-Alloy.Collections.removedNote = Alloy.createCollection('removedNote');
+Alloy.Collections.eventStore = Alloy.createCollection('eventStore');
+Alloy.Collections.syncTransactions = Alloy.createCollection('syncTranaction');
 
 //Add Azure Application Information
-//This is where you would put your azure mobile services name and API Key
+//This is where you would put your azure mobile services name
 Alloy.CFG.azureAppInfo = {
-	name :'ti-many-notes'
+	name :'<---APP NAME---->';  //Replace with your Application name
 };
 
 //Require our Azure Mobile Services Native Module
