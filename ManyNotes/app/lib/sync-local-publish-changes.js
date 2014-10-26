@@ -2,7 +2,9 @@ var Q = require("q");
 
 var agent = {
 	createNoteRequest : function(noteID){
+		console.debug('noteID=' + noteID);
 		var model = Alloy.Collections.note.get(noteID);
+		console.debug('model=' + JSON.stringify(model));
 		if(model !=undefined || model !=null){
 			return JSON.stringify(model);
 		}else{
@@ -10,67 +12,90 @@ var agent = {
 		}
 	},	
 	add : function(evtStore){
-		var promises = [];
-		
-		var events = evtStore.where({
-			eventType:'add'
-		});
+		try{
+			var promises = [];
+
+			var events = evtStore.where({
+				eventType:'add'
+			});
+			
+			console.debug('start processing ' + events.length + ' add events');
+			_.each(events, function(event) {
+
+				var request = agent.createNoteRequest(event.toJSON().noteID);
+				if(request == null){
+					console.debug('unable to load note, skipping sync');
+				}else{
+					var deferred = Q.defer();
+					console.debug('publishing noteID:' + event.toJSON().noteID);
+				    Alloy.Globals.azure.InsertTable('notes', request, function(data) {
+						deferred.resolve(data);				
+		            }, function(err) {
+		            	console.error('Error publishing noteID:' + event.toJSON().noteID + ' ' + err);
+		      			var error = JSON.parse(JSON.stringify(err));
+		   				deferred.reject({
+							success:  false,
+							message: error
+						});
+		            });				
+				 promises.push(deferred.promise); 
+				}	                     	
+			});	
 				
-		_.each(events, function(event) {
-			var deferred = Q.defer();
-			var request = agent.createNoteRequest(event.toJSON().noteID);
-			if(request !== null){
-			    Alloy.Globals.azure.InsertTable('notes', request, function(data) {
+			return Q.all(promises);			
+		}catch(err){
+			console.error('add note general error:' + JSON.stringify(err));
+		}		
+	},
+	remove :function(evtStore){
+		try{
+			var promises = [];
+			
+			var events = evtStore.where({
+				eventType:'remove'
+			});
+			
+			console.debug('start processing ' + events.length + ' remove events');
+			
+			_.each(events, function(event) {
+				var deferred = Q.defer();
+				console.debug('removing azure stored noteID:' + event.toJSON().noteID);
+			    Alloy.Globals.azure.DeleteTable('notes', event.toJSON().noteID, function(data) {
 					deferred.resolve(data);				
 	            }, function(err) {
+	            	console.error('Error removing azure stored noteID:' + event.toJSON().noteID + ' ' + err);
 	      			var error = JSON.parse(JSON.stringify(err));
 	   				deferred.reject({
 						success:  false,
 						message: error
 					});
-	            });				
-			}					
-            promises.push(deferred.promise);                	
-		});	
-			
-		return Q.all(promises);		
-	},
-	remove :function(evtStore){
-		var promises = [];
-		
-		var events = evtStore.where({
-			eventType:'remove'
-		});
-		
-		_.each(events, function(event) {
-			var deferred = Q.defer();
-		    Alloy.Globals.azure.DeleteTable('notes', event.toJSON().noteID, function(data) {
-				deferred.resolve(data);				
-            }, function(err) {
-      			var error = JSON.parse(JSON.stringify(err));
-   				deferred.reject({
-					success:  false,
-					message: error
-				});
-            });					
-            promises.push(deferred.promise);                	
-		});	
-			
-		return Q.all(promises);		
+	            });					
+	            promises.push(deferred.promise);                	
+			});	
+				
+			return Q.all(promises);			
+		}catch(err){
+			console.error('remove note general error:' + JSON.stringify(err));
+		}		
 	}	
 };
 
 var publisher = function(evtStore){
 	var defer = Q.defer();
 	
+	console.debug('Starting local publisher');
 	agent.add(evtStore)
 		.then(function(){
 			return agent.remove(evtStore);
-		}).then(function(){
+		})
+		.then(function(){
+			console.debug('Finished local publisher');
 			defer.resolve({
 					sucess:true
 				});
-		}).catch(function(err){
+		})
+		.catch(function(err){
+			console.error('Error local pushisher: ' + JSON.stringify(err));
 			defer.reject({
 				success:  false,
 				message: err

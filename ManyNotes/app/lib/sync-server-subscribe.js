@@ -1,3 +1,5 @@
+var Q = require("q");
+
 var agent = {
 	verifyStatus:function(evtList){
 		var iLength= evtList.length;
@@ -22,9 +24,11 @@ var agent = {
 	       
 	       var data = JSON.parse(jsonResponse);
 	       var serverEvts = agent.verifyStatus(data);
+	       console.debug('obtained ' + serverEvts.length + ' server events');
 	       defer.resolve(serverEvts);	       
 	       
 	    }, function(err) {
+	    	console.error('Error eventsSince:' + err);
 	        var error = JSON.parse(JSON.stringify(err));
 			defer.reject({
 				success:  false,
@@ -36,6 +40,9 @@ var agent = {
 	add : function(evtList,evtStore){
 		var promises = [];
 		var addList = _(evtList).filter(function (x) { return x.eventType == 'add';});
+		
+		console.debug('downloading ' + addList.length + ' notes');
+		
 		_.each(addList, function(event) {
 			var deferred = Q.defer();
 			var query = "?$filter=id%20eq%" + event.noteID;
@@ -50,8 +57,10 @@ var agent = {
 			    // add new model to the global collection
 			    Alloy.Collections.note.add(note);		       
        			note.save();
+       			console.debug('note ' + data.id + ' created');
        			deferred.resolve();			       
 		    }, function(err) {
+		    	console.error('Error add:' + err);
 		        var error = JSON.parse(JSON.stringify(err));
 				deferred.reject({
 					success:  false,
@@ -60,6 +69,7 @@ var agent = {
 		    });	
 	    	promises.push(deferred.promise); 
 		});
+		return Q.all(promises);	
 	},
 	remove : function(evtList){
 		var removeList = _(evtList).filter(function (x) { return x.eventType == 'remove';});
@@ -72,18 +82,21 @@ var agent = {
 var publisher = function(evtStore,syncLog){
 	var defer = Q.defer();
 	var serverEvents = [];
-		
+	
+	console.debug('Starting server subscriber');
 	agent.eventsSince(syncLog.finLastTranactionID())
 		.then(function(evtList){
 			serverEvents = evtList;
 			agent.remove(serverEvents);
 			return agent.add(serverEvents);
 		}).then(function(){
+			console.debug('Finishing server subscriber');
 			defer.resolve({
 				sucess:true,
 				data:serverEvents
 			});		
 		}).catch(function(err){
+			console.error('Error server subscriber: ' + JSON.stringify(err));
 			defer.reject({
 				success:  false,
 				message: err

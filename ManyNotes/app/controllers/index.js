@@ -22,21 +22,23 @@ var viewController = {
 		}	
 		//Authorization needed to syc
 		auth(function(e){
+			if(!e){
+				alert('need to login to sync');
+			}
+			
 			if(e){
-				// sync(function(f){
-//  					
-				// });
-				var query = "?$filter=modifyid%20gt%20" + 1414296123621;
-			    Alloy.Globals.azure.QueryTable('notes', query, function(jsonResponse) {
-			       var json = JSON.parse(jsonResponse);
-			    }, function(errorMessage) {
-			        var errorJson = JSON.parse(JSON.stringify(errorMessage));
-			        alert(errorJson.error);
-			    });				
+				sync(function(r){
+ 					if(r.success){
+ 						alert('awesome');
+ 					}else{
+ 						alert('problem');
+ 					}
+				});			
 			}
 		});
 	}, 
 	deleteRecord : function(e){
+		//Remove note
 		notes.get(e.rowData.noteID).destroy();
 	    //Add an event - remove
 	    eventStore.addEvent(e.rowData.noteID,'remove');		

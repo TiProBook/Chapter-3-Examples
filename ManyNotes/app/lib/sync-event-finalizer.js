@@ -1,3 +1,4 @@
+var Q = require("q");
 
 var agent = {
 	createEventRequest : function(event){
@@ -13,10 +14,12 @@ var agent = {
 		evtStore.setSortField("modifyID", "ASC");
 		evtStore.sort();		
 		
-		_.each(evtStore.models, function(evt) {			
-			var deferred = Q.defer();			
+		console.debug('broadcasting ' + evtStore.models.length + ' to server');
+		
+		_.each(evtStore.models, function(evt) {								
 		    var request = agent.createEventRequest(evt);
 		    if(request!==null){
+				var deferred = Q.defer();	
 				Alloy.Globals.azure.InsertTable('noteEvents', request, function(data) {
 					deferred.resolve(data);				
 	            }, function(err) {
@@ -25,10 +28,9 @@ var agent = {
 						success:  false,
 						message: error
 					});
-	            });	    	
-		    }
-
-            promises.push(deferred.promise);                	
+	            });
+	          	promises.push(deferred.promise); 	    	
+		    }                          	
 		});	
 		
 		return Q.all(promises);	
@@ -45,10 +47,15 @@ var agent = {
 };
 
 var publisher = function(evtStore){
+	console.debug('event finalizer started');
+	
 	var defer = Q.defer();
 	agent.broadcast(evtStore)
 		.then(function(){
+			console.debug('event finalizer completed');
 			defer.resolve(agent.finalize(evtStore));
 		});
 	return defer.promise;	
 };
+
+module.exports = publisher;
