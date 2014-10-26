@@ -1,9 +1,8 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "noteID": "text primary key",
+		    "id": "text primary key",
 		    "noteText": "text",
-		    "published": "integer",
 		    "modifyID": "real"
 		},
 		adapter: {
@@ -17,26 +16,27 @@ exports.definition = {
 			createNote : function(text){
      			 this.set({
                         noteID : Ti.Platform.createUUID(),
-                        published : 0,
                         noteText : text,
                         modifyID : new Date().getTime()
                  });
                  this.save();				
 			},
-			updatePublished : function(value){
-     			 this.set({
-                        published : (value ? 1 : 0)
-                 });
-                 this.save();					
-			},
-			isPublished : function(){
-				return (this.get('published') == 1);
-			},
-			modified : function(){
-	     		this.set({
-                        modifyID : new Date().getTime()
+			updateNote : function(text){
+		     	this.set({
+		     		 noteText : text,
+                     modifyID : new Date().getTime()
                 });
-                this.save();			
+                this.save();				
+			},
+			noteExists : function(id){
+		        var collection = this;	
+	            var sql = "SELECT id FROM " + collection.config.adapter.collection_name + " WHERE id=?" ;
+	            var db = Ti.Database.open(collection.config.adapter.db_name);
+	            var dbRecords = db.execute(sql,id);
+	            var recordCount = dbRecords.getRowCount();
+	            dbRecords.close();
+	            db.close();
+	     		return (recordCount>0);			
 			},
 			lastModified : function(){
 				return new Date(parseFloat(this.get("modifyID")));

@@ -2,7 +2,7 @@
 	
 	<!-- iOS components -->
 	<NavigationWindow platform="ios">
-        <Window title="My Notes" platform="ios">
+        <Window title="All Notes" platform="ios">
 			<LeftNavButton title="Sync" onClick="viewController.sync" platform="ios"></LeftNavButton>
 			<RightNavButton title="New" onClick="viewController.addNew" platform="ios"></RightNavButton> 
 	        <TableView id="table" dataCollection="note" onClick="viewController.viewNote" onDelete="viewController.deleteRecord" >
@@ -12,7 +12,7 @@
     </NavigationWindow>
     
     <!-- Android components -->
-    <Window title="My Notes" platform="android">
+    <Window title="All Notes" platform="android">
         <TableView dataCollection="note" onClick="viewController.viewNote" onLongpress="viewController.deleteRecord" >
            <TableViewRow title="{noteText}" noteID="{noteID}" />
         </TableView>

@@ -1,36 +1,50 @@
 
+var Q = require("q"),
+	syncLog = require('sync-transaction-record'),
+	localPublisher = require('sync-local-publish-changes'),
+	serverSubscribe = require('sync-server-subscribe'),
+	eventFinalizer = require('sync-event-finalizer');
 
-var sync = function(){
-	
+var sync = function(callback){	
+
 	if(!Ti.Network.online){
+		callback({
+			success:false,
+			message:'No network connection found'
+		});
 		return;
 	}
-	
-	function publish(){
-		
-	};
-	
-	function pushChanges(){
-		
-	};
-	
-	function removeRemoteDeleted(){
-		
-	};
 
-	function removeLocallyDeleted(){
-		
-	};
-	
-	//Remove locally deleted records
-	removeLocallyDeleted();
-	//First step we publish any local records
-	publish();
-	//Next we apply changes
-	pushChanges();
-	//Finally we handle remotely deleted records
-	removeRemoteDeleted();
-	
+	var evtStore = Alloy.Collections.eventStore;
+	// fetch existing tables from storage
+	evtStore && evtStore.fetch();
+			
+	//Initialize our transaction log
+	syncLog.init();
+			
+	new localPublisher(evtStore)
+		.then(function(){
+			return new serverSubscribe(evtStore,syncLog.finLastTranactionID());
+		})
+		.then(function(serverEvents){
+			return new manageDeltaChanges(evtStore,serverEvents);
+		})
+		.then(function(){
+			return new eventFinalizer(evtStore);
+		})
+		.then(function(latestEvent){
+			return syncLog.saveTransaction(latestEvent);
+		}).then(function(){
+			evtStore.removeAll();
+			callback({
+				success:true
+			});		
+		}).catch(function(err){
+			callback({
+				success:false,
+				error:err
+			});		
+		});			
 };
 
 module.exports = sync;

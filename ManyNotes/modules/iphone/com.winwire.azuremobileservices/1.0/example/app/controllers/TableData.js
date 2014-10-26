@@ -86,7 +86,7 @@ if (Ti.Platform.name == "android") {
  */
 function getData(callback) {
     var textArray = [];
-    Alloy.Globals.azureMobileServices.QueryTable(tableName, query, function(jsonResponse) {
+    Alloy.Globals.azure.QueryTable('notes', query, function(jsonResponse) {
         json = JSON.parse(jsonResponse);
         for (var i = 0; i < json.length; i++) {
             var row = Titanium.UI.createTableViewRow({

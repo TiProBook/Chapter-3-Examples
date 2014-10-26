@@ -1,7 +1,5 @@
 <Alloy>
 	<Window id="noteWindow" title="Note">
-		<LeftNavButton title="Cancel" onClick="viewController.closeWindow" platform="ios"></LeftNavButton>
-		<RightNavButton title="Save" onClick="viewController.saveRecord" platform="ios"></RightNavButton> 
 		<TextArea id="txtNote"/>
 		<Button id="btnDelete" title="Delete" onClick="viewController.deleteRecord"	/>	
 		<Label id="labelUpdated"></Label>
