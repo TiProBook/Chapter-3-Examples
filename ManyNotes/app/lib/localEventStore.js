@@ -21,7 +21,7 @@ var eventStorage = {
 		var evtStore = Alloy.Collections.eventStore;
 		
 		//Check if this event should be recorded
-		if(eventStorage.skipRecordEvent(noteID,eventtype)){
+		if(eventStorage.skipRecordEvent(noteID,eventType)){
 			return;
 		}
 				
