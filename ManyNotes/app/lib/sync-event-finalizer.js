@@ -11,7 +11,7 @@ var agent = {
 	broadcast : function(evtStore){
 		var promises = [];
 		
-		evtStore.setSortField("modifyID", "ASC");
+		evtStore.setSortField("modifyid", "ASC");
 		evtStore.sort();		
 		
 		console.debug('broadcasting ' + evtStore.models.length + ' to server');
@@ -23,7 +23,7 @@ var agent = {
 				Alloy.Globals.azure.InsertTable('noteEvents', request, function(data) {
 					deferred.resolve(data);				
 	            }, function(err) {
-	                var error = JSON.parse(JSON.stringify(errorMessage));
+	                var error = JSON.parse(JSON.stringify(err));
 	   				defer.reject({
 						success:  false,
 						message: error
@@ -36,12 +36,13 @@ var agent = {
 		return Q.all(promises);	
 	},
 	finalize : function(evtStore){
-		evtStore.setSortField("modifyID", "DESC");
+		evtStore.setSortField("modifyid", "DESC");
 		evtStore.sort();	
 		if(evtStore.models.length === 0 ){
+			console.debug('No local events existing so generate using sync time');
 			return new Date().getTime();
 		}else{
-			return evtStore.models[0].modifyID;
+			return evtStore.models[0].toJSON().modifyid;
 		}	
 	}	
 };

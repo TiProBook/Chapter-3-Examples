@@ -2,9 +2,7 @@ var Q = require("q");
 
 var agent = {
 	createNoteRequest : function(noteID){
-		console.debug('noteID=' + noteID);
 		var model = Alloy.Collections.note.get(noteID);
-		console.debug('model=' + JSON.stringify(model));
 		if(model !=undefined || model !=null){
 			return JSON.stringify(model);
 		}else{
@@ -16,7 +14,7 @@ var agent = {
 			var promises = [];
 
 			var events = evtStore.where({
-				eventType:'add'
+				eventtype:'add'
 			});
 			
 			console.debug('start processing ' + events.length + ' add events');
@@ -52,7 +50,7 @@ var agent = {
 			var promises = [];
 			
 			var events = evtStore.where({
-				eventType:'remove'
+				eventtype:'remove'
 			});
 			
 			console.debug('start processing ' + events.length + ' remove events');
