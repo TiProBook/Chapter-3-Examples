@@ -2,12 +2,12 @@
 // Create the Note Collection, this will be used to store all of our notes
 Alloy.Collections.note = Alloy.createCollection('note');
 Alloy.Collections.eventStore = Alloy.createCollection('eventStore');
-Alloy.Collections.syncTransactions = Alloy.createCollection('syncTranaction');
+Alloy.Collections.syncTransactionLog = Alloy.createCollection('syncTranactionLog');
 
 //Add Azure Application Information
 //This is where you would put your azure mobile services name
 Alloy.CFG.azureAppInfo = {
-	name :'<---APP NAME---->'  //Replace with your Application name
+	name :'<---APP NAME---->'
 };
 
 //Require our Azure Mobile Services Native Module
