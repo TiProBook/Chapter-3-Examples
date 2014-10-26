@@ -27,7 +27,7 @@ var agent = {
 	eventsSince : function(modifyID){
 		modifyID = modifyID || -1;
 		var defer = Q.defer();
-		
+		console.debug('finding server events greater than ' + modifyID);
 		var query = "?$filter=modifyid%20gt%20" + modifyID;
 	    Alloy.Globals.azure.QueryTable('noteEvents', query, function(jsonResponse) {	       
 	       var data = JSON.parse(jsonResponse);
@@ -98,7 +98,9 @@ var publisher = function(evtStore,syncLog){
 	var serverEvents = [];
 	
 	console.debug('Starting server subscriber');
-	agent.eventsSince(syncLog.finLastTranactionID())
+	var lastID = syncLog.findLastTranactionID();
+	console.debug('lastID=' + lastID);
+	agent.eventsSince(lastID)
 		.then(function(evtList){
 			serverEvents = evtList;
 			agent.remove(serverEvents);

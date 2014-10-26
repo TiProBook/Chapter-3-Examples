@@ -6,12 +6,13 @@ var transaction = {
 			query: 'SELECT max(modifyID) as modifyID FROM ' + transaction.collection.config.adapter.collection_name		
 		});				
 	},
-	finLastTranactionID : function(){
+	findLastTranactionID : function(){
 		if(transaction.collection.models.length==0){
 			return null;
 		}
 		if(transaction.collection.models.length > 0){
-			return transaction.collection.models[0].modifyID;
+			console.debug('trans models:' + JSON.stringify(transaction.collection.models));
+			return transaction.collection.models[0].toJSON().modifyID;
 		}		
 	},
 	saveTransaction :function(modifyID){
