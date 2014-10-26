@@ -4,7 +4,7 @@ var agent = {
 	verifyStatus:function(evtList){
 		var iLength= evtList.length;
 		for (var i=0;i<iLength;i++){
-			evtList[i].noteRefCount = _.where(listOfPlays, {noteID: evtList[i].noteID}).length;
+			evtList[i].noteRefCount = _.where(evtList, {noteID: evtList[i].noteID}).length;
 			if(evtList[i].noteRefCount > 1){
 				evtList[i].eventType = 'update';
 			}else{
