@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.appworkbench.manynotes</id>
-    <name>ManyNotes</name>
+    <id>com.appworkbench.mw</id>
+    <name>MongoWriter</name>
     <version>1.0</version>
-    <publisher>Benjamin Bahrenburg</publisher>
+    <publisher>benjamin</publisher>
     <url>http://bencoding.com</url>
-    <description>undefined</description>
-    <copyright>2014 by Benjamin Bahrenburg</copyright>
+    <description/>
+    <copyright>2014 by benjamin</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>717965ff-9997-4bb3-af0e-7ba0c5187290</guid>
+    <guid>a494ecc2-d1ef-4894-87a1-1ebcdef0835a</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -47,10 +47,7 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-    <modules>
-        <module platform="iphone">com.winwire.azuremobileservices</module>
-        <module platform="android">com.winwire.azuremobileservices</module>
-    </modules>
+    <modules/>
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>
