@@ -1,6 +1,6 @@
-var auth = require('auth');
-var sync = require('sync');
-var eventStore = require('localEventStore');
+var IDConnector = require('id-connector'),
+	sync = require('sync'),
+	eventCoordinator = require('event-coordinator');
 
 //Shortcut our global reference
 var notes = Alloy.Collections.note;
@@ -22,7 +22,7 @@ var viewController = {
 				alert("A network connection is needed to sync your notes. Please check your network connection and try again.");
 				return;
 			}	
-			auth.connect(function(e){
+			IDConnector.connect(function(e){
 				sync(function(r){
  					if(r.success){
  						alert('notes synchronized successfully');
@@ -33,7 +33,7 @@ var viewController = {
 			});				
 		}
 		
-		if(auth.hasConnectedBefore()){
+		if(IDConnector.hasConnectedBefore()){
 			connectThenSync();
 			return;
 		}
@@ -53,7 +53,7 @@ var viewController = {
 		//Remove note
 		notes.get(e.rowData.noteid).destroy();
 	    //Add an event - remove
-	    eventStore.addEvent(e.rowData.noteID,'remove');		
+	    eventCoordinator.addEvent(e.rowData.noteID,'remove');		
 	},
 	viewNote : function(e){
 		var model = notes.get(e.rowData.noteID).toJSON();

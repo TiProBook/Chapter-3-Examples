@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 
-var eventStore = require('localEventStore');
+var eventCoordinator = require('event-coordinator');
 
 //Check if we have the noteText and noteID value, if so we are in edit mode
 var isEdit = args.hasOwnProperty("notetext") && args.hasOwnProperty("id");
@@ -29,7 +29,7 @@ var viewController = {
 	    // add new model to the global collection
 	    notes.add(note);
 	    //Add an event - add
-	    eventStore.addEvent(note.toJSON().id,'add');
+	    eventCoordinator.addEvent(note.toJSON().id,'add');
 	},
 	edit : function(){
 		//Get the note we need to update
@@ -37,13 +37,13 @@ var viewController = {
 		//Update the note text
 		note.updateNote($.txtNote.value);
 	    //Add an event - update
-	    eventStore.addEvent(args.id,'update');		
+	    eventCoordinator.addEvent(args.id,'update');		
 	},
 	remove : function(){
 		//Get the note we need to remove
 		notes.get(args.id).destroy();
 	    //Add an event - remove
-	    eventStore.addEvent(args.id,'remove');			
+	    eventCoordinator.addEvent(args.id,'remove');			
 	},
 	persist : function(){
 		//If no text entered, close window without saving
