@@ -9,14 +9,9 @@ exports.definition = {
 		},
 		adapter: {
 			"type": "sql",
-			"idAttribute": "eventid",
+			"idAttribute": "id",
 			"collection_name": "eventStore"
 		}
-	},
-	extendModel: function(Model) {
-		_.extend(Model.prototype, {
-		});
-		return Model;
 	},
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
