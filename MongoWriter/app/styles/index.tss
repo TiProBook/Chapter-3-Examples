@@ -1,5 +1,6 @@
 ".container": {
-	backgroundColor:"white"
+	backgroundColor:"white",
+	layout:"vertical"
 }
 
 "Label": {
@@ -8,8 +9,15 @@
 	color: "#000"
 }
 
+"Button": {
+	top:20
+}
+
+
 "#label": {
+	top:30,
+	textAlign:'center',
 	font: {
-		fontSize: 12
+		fontSize: 20, fontWeight:'bold'
 	}
 }

@@ -1,5 +1,7 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World</Label>
+		<Label id="label">Tap to work with our example remote event logs</Label>
+		<Button onClick="addLogEntry">Add Remote Log Event</Button>
+		<Button onClick="removeAllLogs">Clear Old Remote Event Log</Button>
 	</Window>
 </Alloy>
