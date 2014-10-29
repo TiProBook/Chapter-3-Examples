@@ -32,7 +32,7 @@ function removeAllLogs(){
 	};
 	
 	mongoClient.deleteDocuments('eventLog',query,function(data){
-		var message = (data.sucess) ? 'Event Log Cleared' : 'Error:' + JSON.stringify(data.message);
+		var message = (data.success) ? 'Event Log Cleared' : 'Error:' + JSON.stringify(data.message);
 		alert(message);
 	});	
 };
