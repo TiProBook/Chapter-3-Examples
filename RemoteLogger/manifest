@@ -1,8 +1,8 @@
-#appname: MongoWriter
+#appname: RemoteLogger
 #publisher: benjamin
 #url: http://bencoding.com
 #image: appicon.png
-#appid: com.appworkbench.mw
+#appid: com.appworkbench.rl
 #desc: undefined
 #type: mobile
-#guid: a494ecc2-d1ef-4894-87a1-1ebcdef0835a
+#guid: 14513ee3-a993-4426-96d1-a83066c746f7

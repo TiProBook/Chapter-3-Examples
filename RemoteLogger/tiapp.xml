@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.appworkbench.mw</id>
-    <name>MongoWriter</name>
+    <id>com.appworkbench.rl</id>
+    <name>RemoteLogger</name>
     <version>1.0</version>
     <publisher>benjamin</publisher>
     <url>http://bencoding.com</url>
-    <description>undefined</description>
+    <description/>
     <copyright>2014 by benjamin</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>a494ecc2-d1ef-4894-87a1-1ebcdef0835a</guid>
+    <guid>14513ee3-a993-4426-96d1-a83066c746f7</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
