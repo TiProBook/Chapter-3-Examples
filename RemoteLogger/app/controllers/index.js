@@ -11,11 +11,12 @@ function addLogEntry(){
 	var logEntry = {
 		message:'hello word ' + new Date().getTime(),
 		level : 'informational',
+		appID : Ti.Platform.id,
 		timestamp : new Date().getTime()
 	};
 	
 	mongoClient.createDocument('eventLog',logEntry,function(data){
-		var message = (data.sucess) ? 'Event Log Added' : 'Error:' + JSON.stringify(data.message);
+		var message = (data.success) ? 'Event Log Added' : 'Error:' + JSON.stringify(data.message);
 		alert(message);
 	});	
 };
