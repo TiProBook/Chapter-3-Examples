@@ -27,7 +27,7 @@ function removeAllLogs(){
 	
 	var query = {
 		q: {
-			timestamp: { $gt: startingDate.getTime() }
+			timestamp: { $gt: startingDate.getTime(), appID: Ti.Platform.id }
 		}
 	};
 	
