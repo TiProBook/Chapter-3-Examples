@@ -4,7 +4,7 @@ var mongoClient = new mongo({
 	debug : true,
 	timeout : 15000,
 	apiKey: "your mongo lab apikey goes here",
-	dbName :'event-log' //"your database name goes here"	
+	dbName :'store-list' //"your database name goes here"	
 });
 
 function addLogEntry(){
